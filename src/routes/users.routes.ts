@@ -1,8 +1,8 @@
 import e, { Router } from 'express';
 import { defaultController } from '../controllers/defaultController';
 
-const indexRouter: Router = e.Router();
+const usersRouter: Router = e.Router();
 
-indexRouter.get('/', defaultController);
+usersRouter.get('/', defaultController);
 
-export { indexRouter };
+export { usersRouter };
