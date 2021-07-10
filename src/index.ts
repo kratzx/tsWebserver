@@ -1,7 +1,5 @@
-const greeting = (person: string) => {
+import Server from './app';
 
-    console.log('Good day ' + person);
+const myServer = new Server();
 
-};
-
-greeting('Leo');
+myServer.run();
