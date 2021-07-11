@@ -51,7 +51,7 @@ export const productsController = {
         console.log('Error: ', e);
         res.status(500).send(e);
       })
-    },
+  },
   getOneProduct: (req: Request, res: Response) => {
     ProductModel.findById(req.params.id).exec()
       .then( product => {
@@ -62,19 +62,42 @@ export const productsController = {
         console.log('Error: ', e);
         res.status(500).send(e);
       })
-  },
-  
+  },  
   addProducts: (req: Request, res: Response) => {
     console.log('Adding to DB:\n', req.body);
     req.body.products
       ? addManyProducts(req, res)
       : addOneProduct(req, res);
   },
-  updateProducts: (req: Request, res: Response) => {
-    res.status(200).send('Ok update');
-    console.log(req.body);
-    //const id = Number(req.params.id) - 1;
-    //const product =  ProductModel.findById(id);
-    //res.status(200).json(product);
+  deleteOneProduct: (req: Request, res: Response) => {
+    let foundProduct: any;
+    ProductModel.findById(req.params.id).exec()
+      .then(product => {
+        if(!product) throw new Error('ID not found');
+        foundProduct = product;
+        return ProductModel.deleteOne({ _id: req.params.id });
+      })
+      .then(product => {
+        res.status(200).json(foundProduct);
+      })
+      .catch(e => {
+        console.log('Error: ', e);
+        res.status(500).send(e);
+      });
+  },
+  updateProduct: (req: Request, res: Response) => {
+    ProductModel.updateOne({_id: req.params.id}, req.body)
+      .then(res => {
+        if (res.n == 0) throw new Error('ID not found');
+        return ProductModel.findById(req.params.id).exec();
+      })
+      .then(product => {
+        console.log(product)
+        res.status(200).json(product);
+      })
+      .catch(e => {
+        console.log('Error: ', e);
+        res.status(500).send(e);
+      });
   }
 }

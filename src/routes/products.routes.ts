@@ -10,11 +10,12 @@ productsRouter.post('/',
   e.json(),  
   productsController.addProducts);
 
-productsRouter.put('/', 
-  e.json(),
-  productsController.updateProducts);
 productsRouter.put('/:id', 
   e.json(),
-  productsController.updateProducts);
+  productsController.updateProduct);
+
+productsRouter.delete('/:id', 
+  e.json(),
+  productsController.deleteOneProduct);
 
 export { productsRouter };
