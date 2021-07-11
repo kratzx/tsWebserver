@@ -1,4 +1,5 @@
 import e from 'express';
+import { urlLogger } from './middleware/urlLogger';
 import { indexRouter, productsRouter, usersRouter } from './routes';
 
 export default class Server {
@@ -19,7 +20,9 @@ export default class Server {
     });
   }
 
-  middleware() {}
+  middleware() {
+    this.app.use(urlLogger);
+  }
 
   routes() {
     this.app.use('/', indexRouter);
