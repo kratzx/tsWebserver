@@ -3,10 +3,10 @@ import { ProductModel } from '../services/schemas/productSchema';
 
 const addOneProduct = (req: Request, res: Response) => {
   ProductModel.create(req.body)
-    .then(value => {
+    .then(product => {
       console.log('Success!');
-      console.log('ID:', value.id);
-      res.status(200).json(value);
+      console.log('ID:', product.id);
+      res.status(200).json(product);
     })
     .catch(e => {
       console.log('Error: ', e);
@@ -15,9 +15,9 @@ const addOneProduct = (req: Request, res: Response) => {
 }
 const addManyProducts = (req: Request, res: Response) => {
   ProductModel.insertMany(req.body.products)
-    .then(value => {
+    .then(products => {
       console.log('Success!');
-      res.status(200).json(value);
+      res.status(200).json(products);
     })
     .catch(e => {
       console.log('Error: ', e);
@@ -37,8 +37,12 @@ export const productsController = {
         res.status(500).send(e);
       })
   },
-  getAllProducts: (req: Request, res: Response) => {
-    ProductModel.find().exec()
+  getProducts: (req: Request, res: Response) => {
+    let search;
+    req.query
+      ? search = ProductModel.find(req.query)
+      : search = ProductModel.find();
+    search.exec()
       .then(products => {
         console.log({ products });
         res.status(200).json({ products });
@@ -47,13 +51,19 @@ export const productsController = {
         console.log('Error: ', e);
         res.status(500).send(e);
       })
-  },
+    },
   getOneProduct: (req: Request, res: Response) => {
-    res.status(200).send('Ok getOne');
-    //const id = Number(req.params.id) - 1;
-    //const product =  ProductModel.findById(id);
-    //res.status(200).json(product);
+    ProductModel.findById(req.params.id).exec()
+      .then( product => {
+        console.log(product)
+        res.status(200).json(product);
+      })
+      .catch(e => {
+        console.log('Error: ', e);
+        res.status(500).send(e);
+      })
   },
+  
   addProducts: (req: Request, res: Response) => {
     console.log('Adding to DB:\n', req.body);
     req.body.products
