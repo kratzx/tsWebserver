@@ -1,8 +1,8 @@
 import e, { Router } from 'express';
-import { defaultController } from '../controllers/defaultController';
+import { productsController } from '../controllers/';
 
 const indexRouter: Router = e.Router();
 
-indexRouter.get('/', defaultController);
+indexRouter.get('/', productsController.getFeaturedProducts);
 
 export { indexRouter };

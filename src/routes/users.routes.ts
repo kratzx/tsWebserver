@@ -1,5 +1,5 @@
 import e, { Router } from 'express';
-import { defaultController } from '../controllers/defaultController';
+import { defaultController } from '../controllers/';
 
 const usersRouter: Router = e.Router();
 
