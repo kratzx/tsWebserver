@@ -7,6 +7,6 @@ export const ProductSchema = new Schema<Product>({
   sku: { type: String, required: true},
   description: { type: String, required: true},
   tags: [String]
-});
+  }, { collection: 'products' });
 
 export const ProductModel = model<Product>('Product', ProductSchema);
