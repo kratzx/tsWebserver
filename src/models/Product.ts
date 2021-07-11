@@ -3,5 +3,6 @@ export interface Product {
   price: number;
   sku: string;
   description: string;
+  category: string;
   tags?: Array <string>;
 }

@@ -6,6 +6,7 @@ export const ProductSchema = new Schema<Product>({
   price: { type: Number, required: true },
   sku: { type: String, required: true},
   description: { type: String, required: true},
+  category: { type: String, required: true},
   tags: [String]
   }, { collection: 'products' });
 
