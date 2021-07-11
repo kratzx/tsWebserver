@@ -1,4 +1,5 @@
 import mongoose, { Connection } from 'mongoose';
+import { dotEnv } from '../config/dotEnv';
 
 export default class MongoAltas {
 
@@ -6,7 +7,7 @@ export default class MongoAltas {
   db: Connection | undefined
 
   constructor() {
-    this.uri = process.env.MONGODB_ATLAS_STRING;
+    this.uri = dotEnv.atlasString;
   }
 
   async run() {
